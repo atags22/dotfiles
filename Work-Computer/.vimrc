@@ -59,9 +59,9 @@ set cmdheight=2 "Sets the command line height to 2 lines
 
 set modelines=0 "special comments at the end of the file that allow certain settings to only be for this file
 
-set foldenable " enable folding. ie. you can minimize your functions
-set foldlevelstart=10 "open up to 5 folds when opening file
-set foldmethod=indent "tells vim where to fold. Syntax is also an option, as well as some others
+" set foldenable " enable folding. ie. you can minimize your functions
+" set foldlevelstart=10 "open up to 5 folds when opening file
+" set foldmethod=indent "tells vim where to fold. Syntax is also an option, as well as some others
 
 set rtp +=~/.fzf
 
@@ -140,6 +140,7 @@ nnoremap ;; :s/\v(.)$/\=submatch(1)==';' ? '' : submatch(1).';'<CR> :noh <CR> " 
 
 " Allow jj to trigger ESC
 imap jj <Esc>
+imap ;; <Esc>
 
 " Nerd Tree
 map <C-n> :NERDTreeToggle<CR>
@@ -174,7 +175,7 @@ nnoremap <leader>g :grep!<space>
 nnoremap <leader>t :tag<space>
 nnoremap <leader>tn :tnext<CR>
 nnoremap <leader>tp :tprev<CR>
-nnoremap <leader>p :pop<CR>
+" nnoremap <leader>p :pop<CR>
 
 " Tabular
 vnoremap <leader>t :Tabular<space> /
@@ -194,6 +195,10 @@ nnoremap <C-J> <C-W><C-J>
 nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
+
+vnoremap <leader>y :w! /tmp/vimtmp<CR>
+nnoremap <leader>p :r! cat /tmp/vimtmp<CR>
+
 
 set path+=$PWD/**
 
