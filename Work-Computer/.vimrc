@@ -41,9 +41,9 @@ set smartcase
 
 set backspace=indent,eol,start " allow backspacing over autoindent
 set autoindent " when opening a new line, keep the same indent as the previous line,
-	       " unless there's a filetype specific indentation. i.e. after an
-	       " open curly brace
-	       
+	             " unless there's a filetype specific indentation. i.e. after an
+	             " open curly brace
+
 set nostartofline " stop cursor from going to start of line when scrolling down
 set ruler " Display cursor position in status line. Better readability
 
@@ -76,6 +76,7 @@ Plug 'jiangmiao/auto-pairs'
 Plug 'tpope/vim-surround'
 Plug 'alvan/vim-closetag'
 Plug 'godlygeek/tabular'
+Plug 'bronson/vim-trailing-whitespace'
 
 " Integration
 Plug 'vim-syntastic/syntastic'
@@ -94,6 +95,7 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'scrooloose/nerdtree'
 Plug 'junegunn/fzf.vim'
 Plug 'christoomey/vim-tmux-navigator'
+Plug 'easymotion/vim-easymotion'
 
 " Easy Tags
 Plug 'xolox/vim-easytags'
@@ -106,6 +108,9 @@ Plug 'zcodes/vim-colors-basic'
 Plug 'flazz/vim-colorschemes'
 Plug 'morhetz/gruvbox'
 
+" ~~ A e s t h e t i c ~~
+Plug 'ryanoasis/vim-devicons'
+
 " All of your Plugins must be added before the following line
 call plug#end()
 
@@ -114,6 +119,8 @@ call plug#end()
 filetype on
 filetype indent on "Sets filetype-specific indents
 filetype plugin on "Sets filetype-specific indents
+
+set cinoptions+=t0
 
 " ColorScheme
 colorscheme gruvbox
@@ -133,6 +140,10 @@ let g:closetag_xhtml_filenames = '*.xhtml,*.jsx'
 " YCM
 let g:ycm_autoclose_preview_window_after_insertion  = 1
 let g:ycm_autoclose_preview_window_after_completion = 1
+let g:ycm_confirm_extra_conf = 0
+
+" Devicons
+set encoding=UTF-8
 
 "-------------------MAPPINGS--------------------
 
@@ -166,12 +177,19 @@ nnoremap <leader>b :ls<CR>:b<space>
 
 nnoremap <leader>w :w<CR>
 
-nnoremap <leader>f :find<space>
 nnoremap <leader>s :sfind<space>
 nnoremap <leader>v :vert sfind<space>
 nnoremap <leader>g :grep!<space>
 
-" Tags
+" Navigation
+map  F <Plug>(easymotion-Fl)
+map  f <Plug>(easymotion-fl)
+map  T <Plug>(easymotion-Tl)
+map  t <Plug>(easymotion-tl)
+map <leader>d :YcmCompleter GoToDeclaration<CR>
+map <leader>D :YcmCompleter GoToDefinition<CR>
+
+" Tagss
 nnoremap <leader>t :tag<space>
 nnoremap <leader>tn :tnext<CR>
 nnoremap <leader>tp :tprev<CR>
@@ -187,14 +205,7 @@ nnoremap <leader>V :vs<CR>:Files<CR>
 
 nnoremap K :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
 
-" Grip
-nnoremap <leader>G :!i3-msg split v && i3-msg exec "urxvt -e sh -c 'wait $(grip -b %:p)'"<CR>
-
-" Panes
-nnoremap <C-J> <C-W><C-J>
-nnoremap <C-K> <C-W><C-K>
-nnoremap <C-L> <C-W><C-L>
-nnoremap <C-H> <C-W><C-H>
+" Line limi
 
 vnoremap <leader>y :w! /tmp/vimtmp<CR>
 nnoremap <leader>p :r! cat /tmp/vimtmp<CR>
@@ -219,3 +230,9 @@ let g:fzf_nvim_statusline = 1
 " --color: Search color options
 command! -bang -nargs=* Find call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --follow --glob "!.git/*" --color "always" '.shellescape(<q-args>), 1, <bang>0)
 "-----------------------------------------------
+
+" Shortcut to vimrc
+map <leader>rc :tabe ~/.vimrc<CR>
+
+" Source on close
+autocmd bufwritepost .vimrc source $MYVIMRC
